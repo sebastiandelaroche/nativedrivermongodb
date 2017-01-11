@@ -1,0 +1,23 @@
+<div>
+	<h2>
+		List of movies
+	</h2>
+	{% if movies.length !== 0 %}
+		{% for movie in movies %}
+			<div>{{ movie.name }}</div>
+		{% endfor %}
+	{% else %}
+		<div>No hay peliculas registradas</div>
+	{% endif %}
+</div>
+
+
+<div>
+	<form action="/movies" method="post">
+		<label for="name">
+			Name
+			<input type="text" id="name" name="name" />
+		</label>
+		<input type="submit" value="Send">
+	</form>
+</div>
