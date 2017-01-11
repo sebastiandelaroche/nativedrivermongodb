@@ -1,8 +1,6 @@
 
 // middleware
-var MongoClient = require('mongodb').MongoClient,
-	assert = require('assert'),
-	express = require('express'),
+var express = require('express'),
 	app = express(),
 	engines = require('consolidate'),
 	path = require('path'),
