@@ -1,23 +1,41 @@
-<div>
-	<h2>
-		List of movies
-	</h2>
-	{% if movies.length !== 0 %}
-		{% for movie in movies %}
-			<div>{{ movie.name }}</div>
-		{% endfor %}
-	{% else %}
-		<div>No hay peliculas registradas</div>
-	{% endif %}
-</div>
+{% extends "../index.html" %}
+{% block content %}
 
-
-<div>
-	<form action="/movies" method="post">
+	<table class="table table-hover">
+		<tr>
+			<th>Name Movies</th>
+		</tr>
+		{% if movies.length !== 0 %}
+			{% for movie in movies %}
+				<tr><td>{{ movie.name }}</td></tr>
+			{% endfor %}
+		{% else %}
+			<tr><td>No hay peliculas registradas</td></tr>
+		{% endif %}
+	</table>
+	<form>
 		<label for="name">
 			Name
 			<input type="text" id="name" name="name" />
 		</label>
-		<input type="submit" value="Send">
+		<input type="button" onclick="movies.save()" value="Send">
 	</form>
-</div>
+	<script>
+	(function(window, undefined) {
+
+		var movies = {};
+
+		movies.save = function() {
+			var ajax = $.ajax({url: "/movies", method: "post", data: {name: $("#name").val()} });
+			ajax.then(function success(response) {
+				console.log("response", response);
+			}, function error(err) {
+				console.log("err", err.responseJSON);
+			})
+		}
+
+		window.movies = movies;
+
+	})(window);
+	</script>
+{% endblock %}

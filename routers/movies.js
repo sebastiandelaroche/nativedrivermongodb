@@ -17,12 +17,18 @@ router.get('/', function(req, res) {
 
 router.post('/', function(req, res) {
 
-	mongodb.connection("movies", function(err, collection) {
+	var response = {response: { message: "Se ha creado exitosamente la pelicula." }};
+	console.log(req.body.name);
+	if(typeof req.body.name === "undefined" || req.body.name.length === 0) {
+		response.response.message = "El campo nombre es obligatorio.";
+		res.status(500).json(response);
+		return;
+	}
 
-		collection.save({name: req.body.name})
-		res.redirect('/movies');
-		
-	})
+	mongodb.connection("movies", function(err, collection) {
+		collection.save({name: req.body.name});
+		res.status(200).json(response);
+	});
 });
 
 module.exports = router;
